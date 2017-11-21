@@ -60,6 +60,15 @@ public extension Lens {
     
 }
 
+public extension Lens where Whole == Part {
+    
+    static var identity: Lens {
+        return Lens(get: { $0 },
+                    mutatingSet: { _, _ in })
+    }
+    
+}
+
 public func both<A, B, C>(_ lhs: Lens<A, B>, _ rhs: Lens<A, C>) -> Lens<A, (B, C)> {
     return Lens(get: { (lhs.get($0), rhs.get($0)) },
                 mutatingSet: { whole, parts in
